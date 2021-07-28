@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.example.workshop.domain.User;
 import com.example.workshop.repository.UserRepository;
+import com.example.workshop.services.exception.ObjectNotFoundException;
+import com.sun.jdi.ObjectCollectedException;
 
 @Service
 public class UserService {
@@ -16,5 +18,12 @@ public class UserService {
 	
 	public List<User> findAll(){
 		return repo.findAll();
+	}
+	
+	public User findById(String id) {
+		User user = repo.findOne(id);
+		if (user == null) {
+			throw new ObjectNotFoundException("Objeto não encontrado");
+		}return user;
 	}
 }
